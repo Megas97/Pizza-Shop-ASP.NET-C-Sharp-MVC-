@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "All Pizzas";
+}
+
+<h2>All Pizzas</h2>
+
+<hr />
+<div class="container text-success" style="text-align: center;">
+    @ViewBag.Message
+</div>
+<br />
+<div class="container text-success" style="text-align: center;">
+    @ViewBag.Message2
+</div>
+<br />
+
+<div class="container">
+    @foreach (var pizza in Model)
+    {
+        if (!pizza.PizzaName.Contains("Custom Pizza #"))
+        {
+            <div class="col-sm-4 col-md-4 col-xs-12">
+                <div class="video-frame" style="text-align:center; color:#000000">
+                    <b style="color:#000000; font-size:20px;">@pizza.PizzaName</b>
+                    <b>
+                        <br />
+                        <img style="width:250px; height:250px;" src="@Url.Content(pizza.PizzaPicturePath)" typeof="image/*" />
+                        <br />
+                        @{
+                            string ingredients = "";
+                            ingredients = ViewData[pizza.PizzaName + " " + pizza.PizzaSize];
+                        }
+                        Ingredients: <i>@ingredients</i>
+                        <br />
+                        Size: @pizza.PizzaSize
+                        <br />
+                        Price: @String.Format("{0:0.00}", pizza.PizzaPrice) BGN
+                        <br />
+                        <div>
+                            @Html.ActionLink("Add To Cart", "CreateOrderWithPizza", "Home", new { id = pizza.PizzaID }, null)
+                            <br />
+                            @Html.ActionLink("Customize", "CreateCustomPizza", "Home", new { id = pizza.PizzaID }, null)
+                        </div>
+                    </b>
+                </div>
+                <br />
+                <br />
+            </div>
+        }
+    }
+</div>

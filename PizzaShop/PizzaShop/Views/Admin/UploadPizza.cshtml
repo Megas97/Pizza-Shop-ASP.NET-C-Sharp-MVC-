@@ -1,0 +1,98 @@
+﻿@model PizzaShop.Models.Pizza
+
+@{
+    ViewBag.Title = "Upload Pizza";
+}
+
+<h2>Upload Pizza</h2>
+
+@using (Html.BeginForm("UploadPizza", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <hr />
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        </div>
+    </div>
+    <br />
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.PizzaName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PizzaName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PizzaName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RecipeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    List<SelectListItem> recipesList = new List<SelectListItem>();
+                    using (DBEntities de = new DBEntities())
+                    {
+                        foreach (var recipe in de.Recipes)
+                        {
+                            if (!recipe.RecipeName.Contains("Custom Recipe #"))
+                            {
+                                recipesList.Add(new SelectListItem
+                                {
+                                    Text = recipe.RecipeName,
+                                    Value = recipe.RecipeName
+                                });
+                            }
+                        }
+                        @Html.DropDownList("RecipesList", recipesList, "-- Select Recipe --", new { @class = "form-control" })
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PizzaSize, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @using PizzaShop.Models;
+                @{
+                    List<SelectListItem> sizesList = new List<SelectListItem>();
+                    sizesList.Add(new SelectListItem
+                    {
+                        Text = "Small",
+                        Value = "Small"
+                    });
+                    sizesList.Add(new SelectListItem
+                    {
+                        Text = "Medium",
+                        Value = "Medium"
+                    });
+                    sizesList.Add(new SelectListItem
+                    {
+                        Text = "Large",
+                        Value = "Large"
+                    });
+                    @Html.DropDownList("SizesList", sizesList, "-- Select Size --", new { @class = "form-control" })
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PizzaPicturePath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group">
+                    @Html.TextBox("Image", "", new { type = "file", accept = "image/*" }) <br />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

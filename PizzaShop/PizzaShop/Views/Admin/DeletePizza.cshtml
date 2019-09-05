@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Delete Pizza";
+}
+
+<h2>Delete Pizza</h2>
+
+<center>
+    @using (Html.BeginForm("DeletePizza", "Admin", FormMethod.Post))
+    {
+        <hr />
+        <div class="form-group">
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <label>Choose a pizza to delete!</label>
+            <br />
+            @using PizzaShop.Models;
+            @{
+                List<SelectListItem> pizzasList = new List<SelectListItem>();
+                using (DBEntities de = new DBEntities())
+                {
+                    foreach (Pizza pizza in de.Pizzas)
+                    {
+                        if (!pizza.PizzaName.Contains("Custom Pizza #"))
+                        {
+                            pizzasList.Add(new SelectListItem
+                            {
+                                Text = pizza.PizzaName + " - " + pizza.PizzaSize,
+                                Value = pizza.PizzaName + " - " + pizza.PizzaSize
+                            });
+                        }
+                    }
+                    @Html.DropDownList("PizzasList", pizzasList, "-- Select Pizza --", new { @class = "form-control" })
+                }
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Delete Pizza" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</center>

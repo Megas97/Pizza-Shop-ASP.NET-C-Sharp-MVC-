@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Admin Panel";
+}
+
+<h2>Admin Panel</h2>
+
+@using (Html.BeginForm("UploadIngredient", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Upload Ingredient" class="btn btn-default" />
+}
+<br />
+@using (Html.BeginForm("UploadRecipe", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Upload Recipe" class="btn btn-default" />
+}
+<br />
+@using (Html.BeginForm("UploadPizza", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Upload Pizza" class="btn btn-default" />
+}
+<br />
+@using (Html.BeginForm("ManageUsers", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Manage Users" class="btn btn-default" />
+}
+<br />
+@using (Html.BeginForm("DeleteIngredient", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Delete Ingredient" class="btn btn-default" />
+}
+<br />
+@using (Html.BeginForm("DeleteRecipe", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Delete Recipe" class="btn btn-default" />
+}
+<br />
+@using (Html.BeginForm("DeletePizza", "Admin", FormMethod.Get))
+{
+    <input type="submit" value="Delete Pizza" class="btn btn-default" />
+}

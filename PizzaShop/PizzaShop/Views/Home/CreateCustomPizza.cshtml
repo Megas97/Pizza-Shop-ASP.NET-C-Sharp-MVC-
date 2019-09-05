@@ -1,0 +1,71 @@
+﻿@model PizzaShop.Models.Pizza
+
+@{
+    ViewBag.Title = "Create Custom Pizza";
+}
+
+<h2>Create Custom Pizza</h2>
+
+<hr />
+<div class="container text-success" style="text-align: center;">
+    @ViewBag.Message
+</div>
+<br />
+
+@using (Html.BeginForm("CreateOrderWithCustomPizza", "Home", new { id = Model.PizzaID }, FormMethod.Post))
+{
+    <div class="container">
+        <center>
+            <b style="color:#000000; font-size:20px;">@Model.PizzaName</b>
+            <b>
+                <br />
+                <img style="width:250px; height:250px;" src="@Url.Content(Model.PizzaPicturePath)" typeof="image/*" />
+                <br />
+                @using PizzaShop.Models;
+                @using (DBEntities de = new DBEntities())
+                {
+                    var pizza = de.Pizzas.Where(a => a.PizzaID == Model.PizzaID).FirstOrDefault();
+                    var recipe = de.Recipes.Where(a => a.RecipeID == pizza.RecipeID).FirstOrDefault();
+                    var recipeIngredients = recipe.RecipesIngredients;
+                    @:Base ingredients:
+                    foreach (var ingr in recipeIngredients)
+                    {
+                        @:&nbsp;@ingr.Ingredient.IngredientName
+                        @Html.CheckBox(ingr.Ingredient.IngredientName, true)@:&nbsp;
+                        ViewData["has" + ingr.Ingredient.IngredientName] = ingr.Ingredient.IngredientName;
+                    }
+                    <br />
+                    @:Other ingredients:
+                    foreach (var ingredient in de.Ingredients)
+                    {
+                        if (ViewData["has" + ingredient.IngredientName] == null)
+                        {
+                            @:&nbsp;@ingredient.IngredientName
+                            @Html.CheckBox(ingredient.IngredientName, false)@:&nbsp;
+                        }
+                    }
+                    <br />
+                    List<SelectListItem> customPizzaSizesList = new List<SelectListItem>();
+                    customPizzaSizesList.Add(new SelectListItem
+                    {
+                        Text = "Small",
+                        Value = "Small"
+                    });
+                    customPizzaSizesList.Add(new SelectListItem
+                    {
+                        Text = "Medium",
+                        Value = "Medium"
+                    });
+                    customPizzaSizesList.Add(new SelectListItem
+                    {
+                        Text = "Large",
+                        Value = "Large"
+                    });
+                    @Html.DropDownList("CustomPizzaSizesList", customPizzaSizesList, "-- Select Size --", new { @class = "form-control" })
+                    <br />
+                }
+                <input type="submit" value="Add To Cart" class="btn btn-default" />
+            </b>
+        </center>
+    </div>
+}

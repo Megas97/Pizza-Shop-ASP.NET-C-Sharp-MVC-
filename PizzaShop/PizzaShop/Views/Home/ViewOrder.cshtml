@@ -1,0 +1,55 @@
+﻿@model PizzaShop.Models.Pizza
+
+@{
+    ViewBag.Title = "View Order";
+}
+
+<h2>View Order</h2>
+
+<hr />
+<div class="container text-success" style="text-align: center;">
+    @ViewBag.Message
+</div>
+<br />
+
+<div class="container">
+    <center>
+        <b style="color:#000000; font-size:20px;">@Model.PizzaName</b>
+        <br />
+        <img style="width:250px; height:250px;" src="@Url.Content(Model.PizzaPicturePath)" typeof="image/*" />
+        <br />
+        <b>
+            Ingredients:
+            @using PizzaShop.Models;
+            @using (DBEntities de = new DBEntities())
+            {
+                var pizza = de.Pizzas.Where(a => a.PizzaID == Model.PizzaID).FirstOrDefault();
+                var recipe = de.Recipes.Where(a => a.RecipeID == pizza.RecipeID).FirstOrDefault();
+                var recipeIngredients = recipe.RecipesIngredients;
+                int i = 0;
+                foreach (var ingr in recipeIngredients)
+                {
+                    string separator = "";
+                    if (i < recipeIngredients.Count() - 1)
+                    {
+                        separator = ", ";
+                    }
+                    else
+                    {
+                        separator = "";
+                    }
+                    <i>@ingr.Ingredient.IngredientName@separator</i>
+                    i++;
+                }
+            }
+            <br />
+            Size: @Model.PizzaSize
+            <br />
+            Single Price: @String.Format("{0:0.00}", Model.PizzaPrice) BGN
+            <br />
+            Quantity: @ViewBag.Quantity
+            <br />
+            Total Price: @String.Format("{0:0.00}", ViewBag.TotalPrice) BGN
+        </b>
+    </center>
+</div>

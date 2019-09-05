@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Delete Ingredient";
+}
+
+<h2>Delete Ingredient</h2>
+
+<center>
+    @using (Html.BeginForm("DeleteIngredient", "Admin", FormMethod.Post))
+    {
+        <hr />
+        <div class="form-group">
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <label>Choose an ingredient to delete!</label>
+            <br />
+            @using PizzaShop.Models;
+            @{
+                List<SelectListItem> ingredientsList = new List<SelectListItem>();
+                using (DBEntities de = new DBEntities())
+                {
+                    foreach (Ingredient ingredient in de.Ingredients)
+                    {
+                        ingredientsList.Add(new SelectListItem
+                        {
+                            Text = ingredient.IngredientName,
+                            Value = ingredient.IngredientName
+                        });
+                    }
+                    @Html.DropDownList("IngredientsList", ingredientsList, "-- Select Ingredient --", new { @class = "form-control" })
+                }
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Delete Ingredient" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</center>

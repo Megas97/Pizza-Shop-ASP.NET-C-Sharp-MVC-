@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+
+<hr />
+<div class="container text-success" style="text-align: center;">
+    @ViewBag.Message
+</div>
+<br />
+<div class="container text-success" style="text-align: center;">
+    @ViewBag.Message2
+</div>
+<br />
+
+<table class="table">
+    <tr>
+        <th style="font-size:16px;">
+            <center>Pizza Image</center>
+        </th>
+
+        <th style="font-size:16px;">
+            <center>Order ID</center>
+        </th>
+
+        <th style="font-size:16px;">
+            <center>Pizza Name</center>
+        </th>
+
+        <th style="font-size:16px;">
+            <center>Pizza Size</center>
+        </th>
+
+        <th style="font-size:16px;">
+            <center>Pizza Quantity</center>
+        </th>
+
+        <th style="font-size:16px;">
+            <center>Price</center>
+        </th>
+
+        <th style="font-size:16px;">
+            <center>Options</center>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <center> <img style="width:80px; height:80px;" src="@Url.Content(ViewData["pizzaPicturePath" + item.OrderID])" typeof="image/*" /></center>
+            </td>
+            <td style="font-size:14px;">
+                <br />
+                <center><b>@item.OrderID</b></center>
+            </td>
+            <td style="font-size:14px;">
+                <br />
+                <center><b>@ViewData["pizzaName" + item.OrderID]</b></center>
+            </td>
+            <td style="font-size:14px;">
+                <br />
+                <center><b>@ViewData["pizzaSize" + item.OrderID]</b></center>
+            </td>
+            <td style="font-size:14px;">
+                <br />
+                <center><b> @item.PizzaAmount</b></center>
+            </td>
+            <td style="font-size:14px;">
+                <br />
+                <center><b> @String.Format("{0:0.00}", ViewData["orderPrice" + item.OrderID]) BGN</b></center>
+            </td>
+            <td style="font-size:14px;">
+                <center>
+                    <b>
+                        @Html.ActionLink("Add", "AddOrder", "Home", new { id = item.OrderID }, null)
+                        <br />
+                        @Html.ActionLink("Info", "ViewOrder", "Home", new { id = item.OrderID }, null)
+                        <br />
+                        @Html.ActionLink("Remove", "RemoveOrder", "Home", new { id = item.OrderID }, null)
+                    </b>
+                </center>
+            </td>
+        </tr>
+    }
+</table>
+<hr />
+
+<center><b>Total Price: @String.Format("{0:0.00}", ViewData["totalOrderPrice"]) BGN</b></center>
+<center><b>@Html.ActionLink("Checkout", "CheckoutCompleted", "Home")</b></center>

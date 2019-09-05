@@ -1,0 +1,52 @@
+﻿@using PizzaShop.Models;
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @{
+                    using (DBEntities de = new DBEntities())
+                    {
+                        var user = de.Users.Where(a => a.EmailID == HttpContext.Current.User.Identity.Name).FirstOrDefault();
+                        if (user != null)
+                        {
+                            int ordersCount = 0;
+                            var ordersList = de.Orders.Where(a => a.UserID == user.UserID);
+                            foreach (var order in ordersList)
+                            {
+                                if (order != null)
+                                {
+                                    ordersCount += order.PizzaAmount;
+                                }
+                            }
+                            if (ordersCount == 0)
+                            {
+                                @Html.ActionLink("Checkout", "Checkout", "Home", routeValues: null, htmlAttributes: new { title = "Checkout" })
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Checkout", "Home")">Checkout <sup>@ordersCount</sup></a>
+                            }
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Checkout", "Checkout", "Home", routeValues: null, htmlAttributes: new { title = "Checkout" })
+                        }
+                    }
+                }
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

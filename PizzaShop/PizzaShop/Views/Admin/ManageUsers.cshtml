@@ -1,0 +1,260 @@
+﻿@model IEnumerable<PizzaShop.Models.User>
+
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<h2>Manage Users</h2>
+
+<center>
+    @using (Html.BeginForm("GiveAdmin", "Admin", FormMethod.Post))
+    {
+        <hr />
+        <div class="form-group">
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <label>Choose a user to which to give admin access to!</label>
+            <br />
+            @using PizzaShop.Models;
+            @{
+                List<SelectListItem> usersList = new List<SelectListItem>();
+                using (DBEntities de = new DBEntities())
+                {
+                    foreach (User user in de.Users)
+                    {
+                        var userRoles = user.UsersRoles;
+                        foreach (var userRole in userRoles)
+                        {
+                            if (userRole.Role.RoleName.Equals("User"))
+                            {
+                                usersList.Add(new SelectListItem
+                                {
+                                    Text = user.EmailID,
+                                    Value = user.EmailID
+                                });
+                            }
+                        }
+                    }
+                    @Html.DropDownList("UsersList", usersList, "-- Select User --", new { @class = "form-control" })
+                }
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Give Admin" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("RevokeAdmin", "Admin", FormMethod.Post))
+    {
+        <hr />
+        <div class="form-group">
+            <div class="text-success">
+                @ViewBag.Message2
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <label>Choose a user from which to revoke admin access!</label>
+            <br />
+            @using PizzaShop.Models;
+            @{
+                List<SelectListItem> usersList = new List<SelectListItem>();
+                using (DBEntities de = new DBEntities())
+                {
+                    User currentUser = de.Users.Where(a => a.EmailID == HttpContext.Current.User.Identity.Name).FirstOrDefault();
+                    foreach (User user in de.Users)
+                    {
+                        var userRoles = user.UsersRoles;
+                        foreach (var userRole in userRoles)
+                        {
+                            if (userRole.Role.RoleName.Equals("Admin"))
+                            {
+                                if (!user.EmailID.Equals(currentUser.EmailID))
+                                {
+                                    usersList.Add(new SelectListItem
+                                    {
+                                        Text = user.EmailID,
+                                        Value = user.EmailID
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    @Html.DropDownList("UsersList", usersList, "-- Select User --", new { @class = "form-control" })
+                }
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Revoke Admin" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("DeleteUser", "Admin", FormMethod.Post))
+    {
+        <hr />
+        <div class="form-group">
+            <div class="text-success">
+                @ViewBag.Message3
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <label>Choose a user which to delete!</label>
+            <br />
+            @using PizzaShop.Models;
+            @{
+                List<SelectListItem> usersList = new List<SelectListItem>();
+                using (DBEntities de = new DBEntities())
+                {
+                    User currentUser = de.Users.Where(a => a.EmailID == HttpContext.Current.User.Identity.Name).FirstOrDefault();
+                    foreach (User user in de.Users)
+                    {
+                        var userRoles = user.UsersRoles;
+                        foreach (var userRole in userRoles)
+                        {
+                            if (!user.EmailID.Equals(currentUser.EmailID))
+                            {
+                                usersList.Add(new SelectListItem
+                                {
+                                    Text = user.EmailID,
+                                    Value = user.EmailID
+                                });
+                            }
+                        }
+                    }
+                    @Html.DropDownList("UsersList", usersList, "-- Select User --", new { @class = "form-control" })
+                }
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Delete User" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.EmailID)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IsEmailVerified)
+            </th>
+
+            <th>
+                Is Admin?
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @if ((item.FirstName != "") || (item.FirstName != null))
+                    {
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    }
+                    else
+                    {
+                        @:None
+                    }
+                </td>
+
+                <td>
+                    @if ((item.LastName != "") || (item.LastName != null))
+                    {
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    }
+                    else
+                    {
+                        @:None
+                    }
+                </td>
+
+                <td>
+                    @if ((item.EmailID != "") || (item.EmailID != null))
+                    {
+                        @Html.DisplayFor(modelItem => item.EmailID)
+                    }
+                    else
+                    {
+                        @:None
+                    }
+                </td>
+
+                <td>
+                    @if ((item.Address != "") || (item.Address != null))
+                    {
+                        @Html.DisplayFor(modelItem => item.Address)
+                    }
+                    else
+                    {
+                        @:None
+                    }
+                </td>
+
+                <td>
+                    @if (item.IsEmailVerified != false)
+                    {
+                        @Html.DisplayFor(modelItem => item.IsEmailVerified) @:Yes
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.IsEmailVerified) @:No
+                    }
+                </td>
+
+                <td>
+                    @using (DBEntities de = new DBEntities())
+                    {
+                        User user = de.Users.Where(a => a.EmailID == item.EmailID).FirstOrDefault();
+                        if (user != null)
+                        {
+                            var userRoles = user.UsersRoles;
+                            foreach (var userRole in userRoles)
+                            {
+                                if (userRole.Role.RoleName.Equals("Admin"))
+                                {
+                                    if (userRole.UserID == user.UserID)
+                                    {
+                                        @Html.CheckBox("isAdminTrueCheckbox", true, new { disabled = "disabled" }) @:Yes
+                                    }
+                                }
+                                else if (userRole.Role.RoleName.Equals("User"))
+                                {
+                                    if (userRole.UserID == item.UserID)
+                                    {
+                                        @Html.CheckBox("isAdminFalseCheckbox", false, new { disabled = "disabled" }) @:No
+                                    }
+                                }
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</center>

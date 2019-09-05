@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Delete Recipe";
+}
+
+<h2>Delete Recipe</h2>
+
+<center>
+    @using (Html.BeginForm("DeleteRecipe", "Admin", FormMethod.Post))
+    {
+        <hr />
+        <div class="form-group">
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <label>Choose a recipe to delete!</label>
+            <br />
+            @using PizzaShop.Models;
+            @{
+                List<SelectListItem> recipesList = new List<SelectListItem>();
+                using (DBEntities de = new DBEntities())
+                {
+                    foreach (Recipe recipe in de.Recipes)
+                    {
+                        if (!recipe.RecipeName.Contains("Custom Recipe #"))
+                        {
+                            recipesList.Add(new SelectListItem
+                            {
+                                Text = recipe.RecipeName,
+                                Value = recipe.RecipeName
+                            });
+                        }
+                    }
+                    @Html.DropDownList("RecipesList", recipesList, "-- Select Recipe --", new { @class = "form-control" })
+                }
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Delete Recipe" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</center>
