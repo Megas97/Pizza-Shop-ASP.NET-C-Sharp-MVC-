@@ -1,0 +1,81 @@
+DROP TABLE IF EXISTS [dbo].[RecipesIngredients];
+DROP TABLE IF EXISTS [dbo].[Recipes];
+DROP TABLE IF EXISTS [dbo].[Ingredients];
+DROP TABLE IF EXISTS [dbo].[Pizzas];
+DROP TABLE IF EXISTS [dbo].[Orders];
+DROP TABLE IF EXISTS [dbo].[Users];
+DROP TABLE IF EXISTS [dbo].[Roles];
+DROP TABLE IF EXISTS [dbo].[UsersRoles];
+
+CREATE TABLE [dbo].[Recipes] (
+    [RecipeID]   INT           IDENTITY (1, 1) NOT NULL,
+    [RecipeName] VARCHAR (254) NOT NULL,
+    PRIMARY KEY CLUSTERED ([RecipeID] ASC)
+);
+
+CREATE TABLE [dbo].[Ingredients] (
+    [IngredientID]    INT          IDENTITY (1, 1) NOT NULL,
+    [IngredientName]  VARCHAR (50) NOT NULL,
+    [IngredientPrice] FLOAT (53)   NOT NULL,
+    PRIMARY KEY CLUSTERED ([IngredientID] ASC)
+);
+
+CREATE TABLE [dbo].[RecipesIngredients] (
+    [RecipeIngredientID] INT IDENTITY (1, 1) NOT NULL,
+    [RecipeID]           INT NOT NULL,
+    [IngredientID]       INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([RecipeIngredientID] ASC),
+    CONSTRAINT [FK_RecipesIngredients_Recipes] FOREIGN KEY ([RecipeID]) REFERENCES [dbo].[Recipes] ([RecipeID]),
+    CONSTRAINT [FK_RecipesIngredients_Ingredients] FOREIGN KEY ([IngredientID]) REFERENCES [dbo].[Ingredients] ([IngredientID])
+);
+
+CREATE TABLE [dbo].[Pizzas] (
+    [PizzaID]          INT           IDENTITY (1, 1) NOT NULL,
+    [PizzaName]        VARCHAR (254) NOT NULL,
+    [RecipeID]         INT           NOT NULL,
+    [PizzaPrice]       FLOAT (53)    NOT NULL,
+    [PizzaSize]        VARCHAR (50)  NOT NULL,
+    [PizzaPicturePath] VARCHAR (254) NOT NULL,
+    PRIMARY KEY CLUSTERED ([PizzaID] ASC),
+    CONSTRAINT [FK_Pizzas_Recipes] FOREIGN KEY ([RecipeID]) REFERENCES [dbo].[Recipes] ([RecipeID])
+);
+
+CREATE TABLE [dbo].[Users] (
+    [UserID]            INT              IDENTITY (1, 1) NOT NULL,
+    [FirstName]         VARCHAR (50)     NOT NULL,
+    [LastName]          VARCHAR (50)     NOT NULL,
+    [Address]           VARCHAR (254)    NOT NULL,
+    [EmailID]           VARCHAR (254)    NOT NULL,
+    [Password]          NVARCHAR (MAX)   NOT NULL,
+    [IsEmailVerified]   BIT              NOT NULL,
+    [ActivationCode]    UNIQUEIDENTIFIER NOT NULL,
+    [ResetPasswordCode] NVARCHAR (100)   NULL,
+    PRIMARY KEY CLUSTERED ([UserID] ASC)
+);
+
+CREATE TABLE [dbo].[Roles] (
+    [RoleID]   INT          IDENTITY (1, 1) NOT NULL,
+    [RoleName] VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([RoleID] ASC)
+);
+
+CREATE TABLE [dbo].[UsersRoles] (
+    [UsersRolesID] INT IDENTITY (1, 1) NOT NULL,
+    [UserID]       INT NOT NULL,
+    [RoleID]       INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([UsersRolesID] ASC),
+    CONSTRAINT [FK_UsersRoles_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID])
+);
+
+CREATE TABLE [dbo].[Orders] (
+    [OrderID]     INT IDENTITY (1, 1) NOT NULL,
+    [PizzaID]     INT NOT NULL,
+    [PizzaAmount] INT NOT NULL,
+    [UserID]      INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([OrderID] ASC),
+    CONSTRAINT [FK_Orders_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID]),
+    CONSTRAINT [FK_Orders_Pizzas] FOREIGN KEY ([PizzaID]) REFERENCES [dbo].[Pizzas] ([PizzaID])
+);
+
+INSERT INTO [dbo].[Roles] (RoleName) VALUES ('Admin');
+INSERT INTO [dbo].[Roles] (RoleName) VALUES ('User');

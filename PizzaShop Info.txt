@@ -1,0 +1,35 @@
+Duplicate Key Fix (Check SQL Identity) : https://stackoverflow.com/questions/37834732/cannot-insert-duplicate-key-in-object-dbo-feedback
+Many-to-Many Relationship Code First : https://entityframework.net/many-to-many-relationship
+HTML Entities : https://www.w3schools.com/html/html_entities.asp
+Checkbox ASP : https://www.tutorialsteacher.com/mvc/htmlhelper-checkbox-checkboxfor
+Checkbox Value From View To Controller : https://www.aspforums.net/Threads/154816/Passing-html-CheckBox-value-from-View-to-Controller-using-C-in-ASPNet-MVC/
+Get Checkbox Value From FormCollection : https://stackoverflow.com/questions/28987105/how-to-get-checkbox-value-from-formcollection
+Fix 'The relationship model was not loaded because the type model is not available' Error : https://www.infinetsoft.com/Post/-Solved-The-relationship-model-was-not-loaded-because-the-type-model-is-not-available-The-following-information-may-be-useful-in-resolving-the-previous-error-The-required-property-does-not-exist-on-the-type-model-class/1244#.XP_tWcTVKUk
+DropdownList MVC : https://stackoverflow.com/questions/17727386/dropdownlist-in-mvc-4-with-razor
+Get DropdownList Selected Value : https://stackoverflow.com/questions/27901175/how-to-get-dropdownlist-selectedvalue-in-controller-in-mvc
+LINQ to Entities Error Fix : https://stackoverflow.com/questions/10156659/linq-to-entities-does-not-recognize-the-method-system-string-get-item-system-s
+Many-to-Many Relationship No Primary Key Fix : https://stackoverflow.com/questions/7583770/unable-to-update-the-entityset-because-it-has-a-definingquery-and-no-updatefu
+How To Access Many-to-Many Table Via Entity Framework : https://stackoverflow.com/questions/35858672/how-to-access-many-to-many-table-via-entity-framework-asp-net
+Conflict With The FOREIGN KEY Fix : https://stackoverflow.com/questions/21518995/the-insert-statement-conflicted-with-the-foreign-key-constraint-error
+HTML <img> Tag : https://www.w3schools.com/tags/tag_img.asp
+Dynamic ViewBag (ViewData) : https://forums.asp.net/t/2113260.aspx?Create+Viewbag+property+dynamic
+Force Specific Image Size CSS : https://stackoverflow.com/questions/5108360/force-image-to-a-specific-size-if-it-is-larger
+Format Number String : https://stackoverflow.com/questions/6951335/using-string-format-to-show-decimal-up-to-2-places-or-simple-integer
+Input Area Accept Only Numbers : https://www.w3schools.com/tags/att_input_type_number.asp
+Input Area Change Width : https://stackoverflow.com/questions/4019592/can-you-make-a-input-type-text-element-have-a-size-shorter-than-1
+Set ViewBag Before Redirect (Use TempData) : https://stackoverflow.com/questions/14497711/set-viewbag-before-redirect
+Check If ViewData Exists : https://stackoverflow.com/questions/10076472/check-if-viewdata-is-null-before-setting-dropdownlist-to-it
+String Format : https://docs.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.8
+Pass Multiple Parameters To Html.BeginForm() : https://stackoverflow.com/questions/20942926/pass-multiple-parameters-in-html-beginform-mvc4-controller-action
+RedirectToAction With Parameter : https://stackoverflow.com/questions/1257482/redirecttoaction-with-parameter
+Get Index Of Current Iteration Of foreach Loop : https://stackoverflow.com/questions/43021/how-do-you-get-the-index-of-the-current-iteration-of-a-foreach-loop
+Add Image To Project : https://stackoverflow.com/questions/49934251/how-to-set-background-image-in-mvc5-in-view
+Change Background Image Opacity : https://teamtreehouse.com/community/backgroundimage-opacity
+Add Footnotes To Words In MVC ActionLink : https://stackoverflow.com/questions/402605/create-an-actionlink-with-html-elements-in-the-link-text
+Split String Using Another String : https://stackoverflow.com/questions/19795204/c-sharp-splitting-strings-using-string-instead-of-char-as-seperator
+Multiple Conditions In LINQ Where : https://stackoverflow.com/questions/2281083/using-more-than-one-condition-in-linqs-where-method
+Disable Html.CheckBox : https://forums.asp.net/t/1787379.aspx?how+to+disable+an+Html+CheckBoxFor
+Automatically Insert Rows Into SQL Database : https://www.w3schools.com/sql/sql_insert.asp
+
+Run the SQL script from the 'PizzaShop SQL.txt' file.
+PS: Run it multiple times until everything is cleared if replacing existing tables.
