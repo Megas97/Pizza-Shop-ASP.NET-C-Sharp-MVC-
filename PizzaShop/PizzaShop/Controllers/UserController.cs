@@ -483,7 +483,7 @@ namespace PizzaShop.Controllers
 
             var fromEmail = new MailAddress("venomcarnage97@gmail.com", "Pizza Shop");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = ""; // Replace with actual password
+            var fromEmailPassword = "milachkov"; // Replace with actual password
 
             string subject = "";
             string body = "";
